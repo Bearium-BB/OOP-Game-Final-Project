@@ -11,12 +11,12 @@ namespace OOP_game_Final_Project
     internal class Player : Entity
     {
         public int Gold { get; private set; }
-        public HashSet<TItem> Inventory { get; private set; }
+        public HashSet<IItem> Inventory { get; private set; }
 
         public Player(string name, float maxHealth, Weapon weapon, Armour armour, int[] stats,int gold) : base(name,maxHealth,weapon,armour,stats)
         {
             Gold = gold;
-            Inventory = new HashSet<TItem>();
+            Inventory = new HashSet<IItem>();
             Inventory.Add(weapon);
             Inventory.Add(armour);
         }
@@ -30,7 +30,7 @@ namespace OOP_game_Final_Project
         public void Equip(Weapon weapon)
         {
             string[] StatsName = "Strength,Dexterity,Intelligence,Wisdom,Constitution,Charisma".Split(",");
-            bool B = true;
+            bool canEquip = true;
             for (int i = 0; i < Stats.Count; i++)
             {
                 //Console.WriteLine($"{Stats[StatsName[i]]} {weapon.MinimumStats[StatsName[i]]} {Stats[StatsName[i]] >= weapon.MinimumStats[StatsName[i]]}");
@@ -40,10 +40,10 @@ namespace OOP_game_Final_Project
                 }
                 else
                 {
-                    B = false;
+                    canEquip = false;
                 }
             }
-            if (B == true)
+            if (canEquip)
             {
                 Inventory.Add(Weapon);
                 this.SetWeapon(weapon);
@@ -60,16 +60,16 @@ namespace OOP_game_Final_Project
         public void Equip(Armour armour)
         {
             string[] StatsName = "Strength,Dexterity,Intelligence,Wisdom,Constitution,Charisma".Split(",");
-            bool B = true;
+            bool canEquip = true;
             for (int i = 0; i < Stats.Count; i++)
             {
                 if (Stats[StatsName[i]] <= armour.MinimumStats[StatsName[i]])
                 {
-                    B = false;
+                    canEquip = false;
 
                 }
             }
-            if (B = true)
+            if (canEquip)
             {
                 Inventory.Add(Armour);
                 this.SetArmour(armour);
@@ -82,10 +82,10 @@ namespace OOP_game_Final_Project
             }
         }
 
-        public List<TItem> GetAllWeaponInInventory()
+        public List<IItem> GetAllWeaponInInventory()
         {
-            List<TItem> listTItem = new List<TItem>();
-            foreach(TItem inv in Inventory)
+            List<IItem> listTItem = new List<IItem>();
+            foreach(IItem inv in Inventory)
             {
                 if (inv is Weapon)
                 {
@@ -95,10 +95,10 @@ namespace OOP_game_Final_Project
             return listTItem;
         }
 
-        public List<TItem> GetAllArmourInInventory()
+        public List<IItem> GetAllArmourInInventory()
         {
-            List<TItem> listTItem = new List<TItem>();
-            foreach (TItem inv in Inventory)
+            List<IItem> listTItem = new List<IItem>();
+            foreach (IItem inv in Inventory)
             {
                 if (inv is Armour)
                 {
@@ -108,14 +108,14 @@ namespace OOP_game_Final_Project
             return listTItem;
         }
 
-        public void AddToInventory(TItem item)
+        public void AddToInventory(IItem item)
         {
             Inventory.Add(item);
         }
 
-        public void AddToInventory(List<TItem> items)
+        public void AddToInventory(List<IItem> items)
         {
-            foreach (TItem item in items)
+            foreach (IItem item in items)
             {
                 Inventory.Add(item);
             }

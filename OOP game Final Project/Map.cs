@@ -194,80 +194,80 @@ namespace OOP_game_Final_Project
         private void RegeneratePlayableArea()
         {
             
-            List<KeyValuePair<int, int>> XY = MakeXY().ToList();
+            List<KeyValuePair<int, int>> keyLocations = MakeRandomPositions().ToList();
 
-            KeyValuePair<int,int> xxyy = MakeXXYY(XY);
+            KeyValuePair<int,int> totalCoordinates = GetTotalCoordinates(keyLocations);
 
-            int xx = xxyy.Key;
-            int yy = xxyy.Value;
+            int averageX = totalCoordinates.Key;
+            int averageY = totalCoordinates.Value;
             //this makes it so it starts in the centre the three points
-            xx /= 3;
-            yy /= 3;
-            if (xx > DisplayMap.Count-1)
+            averageX /= 3;
+            averageY /= 3;
+            if (averageX > DisplayMap.Count-1)
             {
-                xx = DisplayMap.Count-1;
+                averageX = DisplayMap.Count-1;
             }
 
-            if (yy > DisplayMap.Count-1)
+            if (averageY > DisplayMap.Count-1)
             {
-                yy = DisplayMap.Count-1;
+                averageY = DisplayMap.Count-1;
             }
 
-            Party.Position = new KeyValuePair<int, int>(xx, yy);
+            Party.Position = new KeyValuePair<int, int>(averageX, averageY);
 
             for (int i = 0; i <= 2; i++)
             {
 
-                int x = xx;
-                int y = yy;
+                int currentX = averageX;
+                int currentY = averageY;
                 //XCR is the current remainder of what it's trying to get to in the x-axis
-                int XCR = x - XY[i].Key;
+                int remainingX = currentX - keyLocations[i].Key;
                 //YCR is the current remainder of what it's trying to get to in the x-axis
-                int YCR = y - XY[i].Value;
-                while (Math.Abs(XCR) != 0 || Math.Abs(YCR) != 0)
+                int remainingY = currentY - keyLocations[i].Value;
+                while (Math.Abs(remainingX) != 0 || Math.Abs(remainingY) != 0)
                 {
                     //This tells it which direction to go in
-                    if (Math.Abs(XCR) >= Math.Abs(YCR) && Math.Abs(XCR) != 0)
+                    if (Math.Abs(remainingX) >= Math.Abs(remainingY) && Math.Abs(remainingX) != 0)
                     {
-                        if (XCR < 0)
+                        if (remainingX < 0)
                         {
-                            x++;
-                            XCR++;
+                            currentX++;
+                            remainingX++;
                         }
                         else
                         {
-                            x--;
-                            XCR--;
+                            currentX--;
+                            remainingX--;
 
                         }
                     }
-                    else if (Math.Abs(YCR) >= Math.Abs(XCR) && Math.Abs(YCR) != 0)
+                    else if (Math.Abs(remainingY) >= Math.Abs(remainingX) && Math.Abs(remainingY) != 0)
                     {
-                        if (YCR < 0)
+                        if (remainingY < 0)
                         {
-                            y++;
-                            YCR++;
+                            currentY++;
+                            remainingY++;
 
                         }
                         else
                         {
-                            y--;
-                            YCR--;
+                            currentY--;
+                            remainingY--;
                         }
                     }
                     //This updates displays Maps information in the room
-                    DisplayMap[x][y].IsWalkable = "|";
+                    DisplayMap[currentX][currentY].IsWalkable = "|";
                 }
             }
 
             //the rest of the function just copies display maps
-            DisplayMap[xx][yy].IsWalkable = "|";
+            DisplayMap[averageX][averageY].IsWalkable = "|";
             CopyMap(MovementMap);
             //DisplayMap[XY[0].Key][XY[0].Value].IsWalkable = "S";
-            DisplayMap[XY[1].Key][XY[1].Value].IsWalkable = "L";
-            DisplayMap[XY[2].Key][XY[2].Value].IsWalkable = "B";
+            DisplayMap[keyLocations[1].Key][keyLocations[1].Value].IsWalkable = "L";
+            DisplayMap[keyLocations[2].Key][keyLocations[2].Value].IsWalkable = "B";
             CopyMap(InformationalMap);
-            DisplayMap[xx][yy].IsWalkable = "P";
+            DisplayMap[averageX][averageY].IsWalkable = "P";
         }
         private void CopyMap(List<List<Room>> map)
         {
@@ -281,19 +281,19 @@ namespace OOP_game_Final_Project
             }
         }
 
-        private KeyValuePair<int, int> MakeXXYY(List<KeyValuePair<int, int>> XY)
+        private KeyValuePair<int, int> GetTotalCoordinates(List<KeyValuePair<int, int>> XY)
         {
 
-            int xx = 0;
-            int yy = 0;
+            int totalX = 0;
+            int totalY = 0;
             foreach (var i in XY)
             {
-                xx += i.Key;
-                yy += i.Value;
+                totalX += i.Key;
+                totalY += i.Value;
             }
-            return new KeyValuePair<int, int>(xx, yy);
+            return new KeyValuePair<int, int>(totalX, totalY);
         }
-        private HashSet<KeyValuePair<int, int>> MakeXY()
+        private HashSet<KeyValuePair<int, int>> MakeRandomPositions()
         {
             HashSet<KeyValuePair<int, int>> HashSetXY = new HashSet<KeyValuePair<int, int>>();
             while (HashSetXY.Count <= 3)
@@ -323,8 +323,8 @@ namespace OOP_game_Final_Project
 
         private void IsEnemy()
         {
-            List<TEntity> EnemyList = InformationalMap[Party.Position.Key][Party.Position.Value].EnemyList;
-            List<TItem> TItemList = InformationalMap[Party.Position.Key][Party.Position.Value].Items;
+            List<IEntity> EnemyList = InformationalMap[Party.Position.Key][Party.Position.Value].EnemyList;
+            List<IItem> TItemList = InformationalMap[Party.Position.Key][Party.Position.Value].Items;
 
             if (EnemyList.Count > 0)
             {

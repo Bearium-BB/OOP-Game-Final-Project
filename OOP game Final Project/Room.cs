@@ -10,13 +10,13 @@ namespace OOP_game_Final_Project
     {
         public string Type { get; set; }
         public string IsWalkable { get; set; }
-        public List<TEntity> EnemyList { get; set; }
-        public List<TItem> Items { get; set; }
+        public List<IEntity> EnemyList { get; set; }
+        public List<IItem> Items { get; set; }
         public Room(string isWalkable, string type = "Space")
         {
             IsWalkable = isWalkable;
-            EnemyList = new List<TEntity>();
-            Items =  new List<TItem>();
+            EnemyList = new List<IEntity>();
+            Items =  new List<IItem>();
             Type = type;
         }
 
@@ -30,25 +30,25 @@ namespace OOP_game_Final_Project
 
         }
 
-        public void AddEnemy(TEntity  E)
+        public void AddEnemy(IEntity  E)
         {
             EnemyList.Add(E);
         }
-        public void AddEnemy(List<TEntity> LE)
+        public void AddEnemy(List<IEntity> LE)
         {
-            foreach(TEntity E in LE)
+            foreach(IEntity E in LE)
             {
                 EnemyList.Add(E);
             }
         }
 
-        public void AddItems(TItem I)
+        public void AddItems(IItem I)
         {
             Items.Add(I);
         }
-        public void AddItems(List<TItem> LI)
+        public void AddItems(List<IItem> LI)
         {
-            foreach (TItem I in LI)
+            foreach (IItem I in LI)
             {
                 Items.Add(I);
             }

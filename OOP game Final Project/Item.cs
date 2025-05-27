@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OOP_game_Final_Project
 {
-    internal class Item : TItem
+    internal class Item : IItem
     {
         public string Name { get; private set; }    
         public int Id { get; private set; }

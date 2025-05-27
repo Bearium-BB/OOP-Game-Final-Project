@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OOP_game_Final_Project
 {
-    internal class Entity : TEntity
+    internal class Entity : IEntity
     {
         public string Name { get; private set; }
         public float MaxHealth { get; private set; }
@@ -51,7 +51,8 @@ namespace OOP_game_Final_Project
                 Stats[Strs[i]] = stats[i];
             }
         }
-        public void DoDamage(TEntity E2)
+
+        public void DoDamage(IEntity E2)
         {
             Console.Clear();
             if (this.GetWeapon().BonusToHit + HelperClass.NumberGenerator(1,20) >= E2.GetArmor().AC)
@@ -80,7 +81,8 @@ namespace OOP_game_Final_Project
             }
             CheckedIsAlive(E2);
         }
-        private void CheckedIsAlive(TEntity E2)
+
+        private void CheckedIsAlive(IEntity E2)
         {
             if (E2.GetCurrentHealth() < 0)
             {
@@ -107,6 +109,7 @@ namespace OOP_game_Final_Project
                 }
             }
         }
+
         public float GetCurrentHealth()
         {
             return CurrentHealth;

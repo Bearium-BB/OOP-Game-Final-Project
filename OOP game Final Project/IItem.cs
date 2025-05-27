@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OOP_game_Final_Project
 {
-    internal interface TItem
+    internal interface IItem
     {
         public string GetName();
 

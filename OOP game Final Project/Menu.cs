@@ -163,7 +163,7 @@ namespace OOP_game_Final_Project
 
 
 
-        private void InIndex(List<TEntity> LE)
+        private void InIndex(List<IEntity> LE)
         {
             if (selectOption > LE.Count - 1)
             {
@@ -175,7 +175,7 @@ namespace OOP_game_Final_Project
             }
         }
 
-        public void DynamicMenu(List<TEntity> LE)
+        public void DynamicMenu(List<IEntity> LE)
         {
 
             WriteLine(Prompt);
@@ -194,7 +194,7 @@ namespace OOP_game_Final_Project
             }
 
         }
-        public TEntity RunDynamicMenu(List<TEntity> ListTEntity)
+        public IEntity RunDynamicMenu(List<IEntity> ListTEntity)
         {
             selectOption = 0;
             ConsoleKeyInfo temp;
@@ -275,7 +275,7 @@ namespace OOP_game_Final_Project
             return ListPlayer[selectOption];
         }
 
-        private void InIndex(List<TItem> LI)
+        private void InIndex(List<IItem> LI)
         {
             if (selectOption > LI.Count - 1)
             {
@@ -287,7 +287,7 @@ namespace OOP_game_Final_Project
             }
         }
 
-        public void DynamicMenu(List<TItem> LI)
+        public void DynamicMenu(List<IItem> LI)
         {
 
             WriteLine(Prompt);
@@ -307,7 +307,7 @@ namespace OOP_game_Final_Project
 
         }
 
-        public TItem RunDynamicMenu(List<TItem> ListTItem)
+        public IItem RunDynamicMenu(List<IItem> ListTItem)
         {
             selectOption = 0;
             ConsoleKeyInfo temp;

@@ -9,8 +9,8 @@ namespace OOP_game_Final_Project
 {
     internal class MasterGameObject
     {
-        public List<TItem> MetaDataItem { get; private set; }
-        public List<TEntity> MetaDataTEntity { get; private set; }
+        public List<IItem> MetaDataItem { get; private set; }
+        public List<IEntity> MetaDataTEntity { get; private set; }
 
         public List<Boss> MetaDataBoss { get; private set; }
 
@@ -19,8 +19,8 @@ namespace OOP_game_Final_Project
 
         public MasterGameObject()
         {
-            MetaDataItem = new List<TItem>();
-            MetaDataTEntity = new List<TEntity>();
+            MetaDataItem = new List<IItem>();
+            MetaDataTEntity = new List<IEntity>();
             MetaDataPlayerClass = new List<PlayerClass>();
             MetaDataBoss = new List<Boss>();
             Menus = new List<Menu>();
@@ -151,7 +151,7 @@ namespace OOP_game_Final_Project
 
         public Weapon GetWeaponByName(string nameOfTheWeapon)
         {
-            foreach (TItem I in MetaDataItem)
+            foreach (IItem I in MetaDataItem)
             {
                 if (I.GetName() == nameOfTheWeapon && I is Weapon)
                 {
@@ -164,7 +164,7 @@ namespace OOP_game_Final_Project
 
         public Armour GetArmourByName(string nameOfTheArmour)
         {
-            foreach (TItem I in MetaDataItem)
+            foreach (IItem I in MetaDataItem)
             {
                 if (I.GetName() == nameOfTheArmour && I is Armour)
                 {
@@ -179,39 +179,39 @@ namespace OOP_game_Final_Project
         {
            return MetaDataBoss[HelperClass.NumberGenerator(0,MetaDataBoss.Count-1)];
         }
-        public List<TEntity> GetSomeTEntity(int howManyEntity)
+        public List<IEntity> GetSomeTEntity(int howManyEntity)
         {
 
-            List<TEntity> listShuffle = Shuffle(MetaDataTEntity);
-            List<TEntity> List = new List<TEntity>();
+            List<IEntity> listShuffle = Shuffle(MetaDataTEntity);
+            List<IEntity> List = new List<IEntity>();
             for (int i = 0; i < howManyEntity;i++ )
             {
-                List.Add((TEntity)listShuffle[i].Clone());
+                List.Add((IEntity)listShuffle[i].Clone());
             }
             return List;
         }
 
-        public List<TItem> GetSomeTItem(int howManyEntity)
+        public List<IItem> GetSomeTItem(int howManyEntity)
         {
 
-            List<TItem> listShuffle = Shuffle(MetaDataItem);
-            List<TItem> List = new List<TItem>();
+            List<IItem> listShuffle = Shuffle(MetaDataItem);
+            List<IItem> List = new List<IItem>();
             for (int i = 0; i < howManyEntity; i++)
             {
-                List.Add((TItem)listShuffle[i].Clone());
+                List.Add((IItem)listShuffle[i].Clone());
             }
             return List;
         }
 
         //https://www.dotnetperls.com/fisher-yates-shuffle
-        public List<TEntity> Shuffle(List<TEntity> deck)
+        public List<IEntity> Shuffle(List<IEntity> deck)
         {
             Random r = new Random();
-            List<TEntity> list = new List<TEntity>(deck);
+            List<IEntity> list = new List<IEntity>(deck);
             for (int n = list.Count - 1; n > 0; --n)
             {
                 int k = r.Next(n + 1);
-                TEntity temp = deck[n];
+                IEntity temp = deck[n];
                 deck[n] = deck[k];
                 deck[k] = temp;
 
@@ -220,14 +220,14 @@ namespace OOP_game_Final_Project
         }
 
         //https://www.dotnetperls.com/fisher-yates-shuffle
-        public List<TItem> Shuffle(List<TItem> deck)
+        public List<IItem> Shuffle(List<IItem> deck)
         {
             Random r = new Random();
-            List<TItem> list = new List<TItem>(deck);
+            List<IItem> list = new List<IItem>(deck);
             for (int n = list.Count - 1; n > 0; --n)
             {
                 int k = r.Next(n + 1);
-                TItem temp = deck[n];
+                IItem temp = deck[n];
                 deck[n] = deck[k];
                 deck[k] = temp;
 

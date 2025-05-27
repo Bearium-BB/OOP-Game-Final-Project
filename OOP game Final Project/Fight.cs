@@ -9,20 +9,20 @@ namespace OOP_game_Final_Project
 {
     internal class Fight
     {
-        public List<TEntity> Entities { get; private set; }
-        public List<TItem> Items { get; private set; }
+        public List<IEntity> Entities { get; private set; }
+        public List<IItem> Items { get; private set; }
         public Party Party { get; private set; }
-        private Queue<KeyValuePair<TEntity, int>> EntitiesOfTurn { get;  set; }
-        private List<KeyValuePair<TEntity, int>> Entitiesinitiative { get; set; }
+        private Queue<KeyValuePair<IEntity, int>> EntitiesOfTurn { get;  set; }
+        private List<KeyValuePair<IEntity, int>> Entitiesinitiative { get; set; }
         private MasterGameObject MasterGameObject = new MasterGameObject(); 
 
-        public Fight(List<TEntity> entities, Party party, List<TItem> items)
+        public Fight(List<IEntity> entities, Party party, List<IItem> items)
         {
             Entities = entities;
             Party = party;
-            EntitiesOfTurn = new Queue<KeyValuePair<TEntity, int>>();
-            Entitiesinitiative = new List<KeyValuePair<TEntity, int>>();
-            TurnForPlayer();
+            EntitiesOfTurn = new Queue<KeyValuePair<IEntity, int>>();
+            Entitiesinitiative = new List<KeyValuePair<IEntity, int>>();
+            SortInitiative();
             Items = items;
         }
         public void StartFight()
@@ -96,9 +96,9 @@ namespace OOP_game_Final_Project
 
         private bool PartyIsAlive()
         {
-            foreach(Player P in Party.Players)
+            foreach(Player player in Party.Players)
             {
-                if (P.IsAlive == true)
+                if (player.IsAlive == true)
                 {
                     return true;
                 }
@@ -121,7 +121,7 @@ namespace OOP_game_Final_Project
                         }
                     }
                     players.Remove(players[i]);
-                    UpdateTurnForPlayer();
+                    UpdateInitiative();
                     Console.WriteLine(Party.Players.Count);
                     Thread.Sleep(5000);
                 }
@@ -141,29 +141,29 @@ namespace OOP_game_Final_Project
                         }
                     }
                     Entities.Remove(Entities[i]);
-                    UpdateTurnForPlayer();
+                    UpdateInitiative();
                 }
             }
         }
 
-        private void SetPlayI(List<TEntity> E, List<KeyValuePair<TEntity, int>> playerTurn)
+        private void SetInitiatives(List<IEntity> E, List<KeyValuePair<IEntity, int>> playerTurn)
         {
-            foreach (TEntity entity in E)
+            foreach (IEntity entity in E)
             {
-                playerTurn.Add(new KeyValuePair<TEntity, int>(entity, HelperClass.NumberGenerator(0, 20)));
+                playerTurn.Add(new KeyValuePair<IEntity, int>(entity, HelperClass.NumberGenerator(0, 20)));
             }
         }
-        private void SetPlayI(Party P, List<KeyValuePair<TEntity, int>> playerTurn)
+        private void SetInitiatives(Party P, List<KeyValuePair<IEntity, int>> playerTurn)
         {
-            foreach (TEntity Player in P.Players)
+            foreach (IEntity Player in P.Players)
             {
-                playerTurn.Add(new KeyValuePair<TEntity, int>(Player, HelperClass.NumberGenerator(0, 20)));
+                playerTurn.Add(new KeyValuePair<IEntity, int>(Player, HelperClass.NumberGenerator(0, 20)));
             }
         }
-        private void TurnForPlayer()
+        private void SortInitiative()
         {
-            SetPlayI(Entities, Entitiesinitiative);
-            SetPlayI(Party, Entitiesinitiative);
+            SetInitiatives(Entities, Entitiesinitiative);
+            SetInitiatives(Party, Entitiesinitiative);
             Entitiesinitiative.Sort((x, y) => x.Value.CompareTo(y.Value));
             Entitiesinitiative.Reverse();
 
@@ -172,7 +172,7 @@ namespace OOP_game_Final_Project
                 EntitiesOfTurn.Enqueue(PI);
             }
         }
-        public void UpdateTurnForPlayer()
+        public void UpdateInitiative()
         {
             EntitiesOfTurn.Clear();
             foreach (var PI in Entitiesinitiative)
